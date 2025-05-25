@@ -22,6 +22,7 @@ The following environment variables are available:
 
 - `SE_JWT_TOKEN`: StreamElements JWT token (required)
 - `DEVICE_PATH`: Printer device path (default: `/dev/usb/lp0`)
+- `SERVER_PORT`: Server port (default: `:8082`)
 
 ## Building
 
@@ -33,4 +34,10 @@ make
 
 ```bash
 ./bin/server
+```
+
+## Installing as a service
+
+```bash
+./install-service.sh
 ```

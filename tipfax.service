@@ -1,0 +1,38 @@
+[Unit]
+Description=TipFax Server - StreamElements tip printer service
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=tipfax
+Group=tipfax
+WorkingDirectory=/opt/tipfax
+ExecStart=/opt/tipfax/tipfax-server
+Restart=always
+RestartSec=5
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=tipfax
+
+# Environment variables
+Environment=SE_JWT_TOKEN=
+Environment=DEVICE_PATH=/dev/usb/lp0
+Environment=SERVER_PORT=:8082
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/tipfax
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+
+# Device access for printer
+DeviceAllow=/dev/usb/lp0 rw
+SupplementaryGroups=lp
+
+[Install]
+WantedBy=multi-user.target 

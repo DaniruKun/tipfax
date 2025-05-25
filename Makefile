@@ -1,12 +1,14 @@
 .PHONY: build run clean
 
+BIN_NAME := tipfax-server
+
 # Build the application
 build:
-	go build -o bin/server cmd/server/main.go
+	go build -o bin/${BIN_NAME} cmd/server/main.go
 
 # Run the application
 run: build
-	./bin/server
+	./bin/${BIN_NAME}
 
 # Clean build artifacts
 clean:
