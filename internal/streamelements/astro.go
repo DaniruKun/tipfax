@@ -142,13 +142,18 @@ func (a *Astro) handleTipMessage(msg Message) {
 			log.Printf("💬 Message: %s", message)
 		}
 
-		a.printer.Write(fmt.Sprintf("Tip from %s: %s %s", username, amount, currency))
-		a.printer.LineFeed()
-		a.printer.Write(fmt.Sprintf("Status: %s", status))
-		a.printer.LineFeed()
-		a.printer.Write(fmt.Sprintf("Message: %s", message))
-		a.printer.LineFeed()
-		a.printer.PrintAndCut()
+		// Print to thermal printer if available
+		if a.printer != nil {
+			a.printer.Write(fmt.Sprintf("Tip from %s: %s %s", username, amount, currency))
+			a.printer.LineFeed()
+			a.printer.Write(fmt.Sprintf("Status: %s", status))
+			a.printer.LineFeed()
+			if message != "" {
+				a.printer.Write(fmt.Sprintf("Message: %s", message))
+				a.printer.LineFeed()
+			}
+			a.printer.PrintAndCut()
+		}
 	} else {
 		log.Println("Error: Could not find donation data in tip message")
 		log.Printf("Raw data: %+v", data)
